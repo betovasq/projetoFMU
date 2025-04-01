@@ -29,6 +29,15 @@ document.addEventListener('DOMContentLoaded', function() {
       localStorage.setItem('theme', 'light');
     }
   });
+  document.getElementById("theme-toggle").addEventListener("click", function () {
+    document.body.classList.toggle("dark-theme");
+    const themeIcon = document.getElementById("theme-icon");
+    if (document.body.classList.contains("dark-theme")) {
+      themeIcon.textContent = "☀️";
+    } else {
+      themeIcon.textContent = "🌙";
+    }
+  });
   
   // Alternador do Menu Mobile
   const menuToggle = document.getElementById('menu-toggle');
