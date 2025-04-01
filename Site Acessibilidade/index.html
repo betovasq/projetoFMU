@@ -26,7 +26,7 @@
         </nav>
         <div class="header-actions">
           <button id="theme-toggle" class="btn btn-icon" aria-label="Alternar tema claro/escuro">
-            <i class="lucide-moon" id="theme-icon"></i>
+            <span id="theme-icon">🌙</span>
           </button>
           <button class="btn btn-menu" id="menu-toggle" aria-label="Abrir menu">
             Menu
@@ -34,20 +34,28 @@
         </div>
       </div>
     </header>
-
     <main>
       <section class="hero">
-        <div class="container">
-          <div class="hero-content">
-            <h1>Bem-vindo ao MindSpace</h1>
-            <p>Um espaço seguro para relaxar sua mente e melhorar sua concentração.</p>
-            <div class="hero-buttons">
-              <a href="#relaxation" class="btn btn-primary">Começar a Relaxar</a>
-              <a href="#focus" class="btn btn-outline">Melhorar Concentração</a>
+        <!-- Carrossel de imagens como background -->
+        <div class="hero-carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active" style="background-image: url(css/img/Pixel\ Art\ GIF.gif);"></div>
+                <div class="carousel-item" style="background-image: url(css/img/8bit\ GIF.gif);"></div>
+                <div class="carousel-item" style="background-image: url(css/img/pixel\ GIF.gif);"></div>
             </div>
-          </div>
         </div>
-      </section>
+        
+        <div class="container">
+            <div class="hero-content">
+                <h1>Bem-vindo ao MindSpace</h1>
+                <p>Um espaço seguro para relaxar sua mente e melhorar sua concentração.</p>
+                <div class="hero-buttons">
+                    <a href="#relaxation" class="btn btn-primary">Começar a Relaxar</a>
+                    <a href="#focus" class="btn btn-outline">Melhorar Concentração</a>
+                </div>
+            </div>
+        </div>
+    </section>
 
       <section id="relaxation" class="section section-alt">
         <div class="container">
@@ -236,5 +244,13 @@
 
   <audio id="audio-player" loop></audio>
   <script src="js/script.js"></script>
+  <!-- Development version -->
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+
+<!-- Production version -->
+<script src="https://unpkg.com/lucide@latest"></script>
+ <script>
+    lucide.createIcons();
+  </script>
 </body>
 </html>

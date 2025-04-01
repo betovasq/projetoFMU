@@ -29,6 +29,15 @@ document.addEventListener('DOMContentLoaded', function() {
       localStorage.setItem('theme', 'light');
     }
   });
+  document.getElementById("theme-toggle").addEventListener("click", function () {
+    document.body.classList.toggle("dark-theme");
+    const themeIcon = document.getElementById("theme-icon");
+    if (document.body.classList.contains("dark-theme")) {
+      themeIcon.textContent = "☀️";
+    } else {
+      themeIcon.textContent = "🌙";
+    }
+  });
   
   // Alternador do Menu Mobile
   const menuToggle = document.getElementById('menu-toggle');
@@ -38,6 +47,30 @@ document.addEventListener('DOMContentLoaded', function() {
     mainNav.style.display = mainNav.style.display === 'flex' ? 'none' : 'flex';
   });
   
+ //script carrossel
+ document.addEventListener('DOMContentLoaded', function() {
+  const carouselItems = document.querySelectorAll('.carousel-item');
+  let currentItem = 0;
+
+  function showNextItem() {
+    //remove a classe do item atualmente ativo
+    carouselItems[currentItem].classList.remove('active');
+
+    //avança para o proximo item
+    currentItem(currentItem + 1) % carouselItems.length;
+
+    //adiciona a classe active a um novo item
+    carouselItems[currentItem].classList.add('active');
+  }
+
+  //inicia o carrossel (muda a cada 5 segundos)
+setInterval(showNextItem, 5000);
+
+  //garante que o primeiro item está ativo
+  carouselItems[0].classList.add('active');
+});
+
+
   // Exercício de Respiração
   const breathingCircle = document.getElementById('breathing-circle');
   const breathingText = document.getElementById('breathing-text');
