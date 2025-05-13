@@ -342,116 +342,151 @@ setInterval(showNextItem, 5000);
   }
 });
 
-// Reprodutor de Sons
+document.addEventListener('DOMContentLoaded', function() {
+  // Sound data
+  const sounds = {
+    rain: {
+      name: 'Chuva',
+      url: "https://www.zapsplat.com/wp-content/uploads/2015/sound-effects-112294/zapsplat_nature_rain_medium_light_house_roof_ext_112299.mp3"
+    },
+    forest: {
+      name: 'Floresta',
+      url: 'https://www.zapsplat.com/wp-content/uploads/2015/sound-effects-112294/zapsplat_nature_australia_forest_summer_insects_cicada_distant_birds_002_112474.mp3'
+    },
+    waves: {
+      name: 'Ondas',
+      url: 'https://www.zapsplat.com/wp-content/uploads/2015/sound-effects-344-audio/344_audio_AMBSea_EXT_Quiet_Beach_Morning_Waves_Sand_Wind_Edited_344_Audio_UK_Seaside_Town_and_Theme_Park_1701.mp3'
+    },
+    fire: {
+      name: 'Lareira',
+      url: 'https://www.zapsplat.com/wp-content/uploads/2015/sound-effects-gma/gma_fire_burning_flames_crackle_loop_01_351.mp3'
+    },
+    birds: {
+      name: 'Pássaros',
+      url: 'https://www.zapsplat.com/wp-content/uploads/2015/sound-effects-dylan-barfield/dylan_barfield_AMBTrop_QLD_Rainforest_quiet_morning_ambience_dB_AUS_112.mp3'
+    }
+  };
+
+  // Audio elements
+  let currentAudio = null;
+  let isPlaying = false;
+  let currentVolume = 0.5;
+  let currentSound = 'rain';
+
+  // DOM elements
   const soundButtons = document.querySelectorAll('.btn-sound');
   const soundToggle = document.getElementById('sound-toggle');
   const soundToggleIcon = document.getElementById('sound-toggle-icon');
-  const volumeSlider = document.getElementById('volume-slider');
+  const currentSoundDisplay = document.getElementById('current-sound');
   const soundMute = document.getElementById('sound-mute');
   const volumeIcon = document.getElementById('volume-icon');
-  const currentSoundDisplay = document.getElementById('current-sound');
-  const audioPlayer = document.getElementById('audio-player');
+  const volumeSlider = document.getElementById('volume-slider');
+  const soundButtonsContainer = document.querySelector('.sound-buttons');
 
-  let isPlaying = false;
-  let isMuted = false;
-  let currentSound = 'rain';
-  let volume = 50;
+  // Update all sound buttons
+  const allSoundButtons = document.querySelectorAll('.btn-sound');
 
-  const sounds = {
-    'rain': {
-      name: 'Chuva',
-      url: 'https://soundbible.com/mp3/rain_thunder-Mike_Koenig-739006097.mp3'
-    },
-    'forest': {
-      name: 'Floresta',
-      url: 'https://soundbible.com/mp3/forest_amb-Mike_Koenig-1833732834.mp3'
-    },
-    'waves': {
-      name: 'Ondas',
-      url: 'https://soundbible.com/mp3/Ocean_Waves-Mike_Koenig-980635569.mp3'
-    },
-    'fire': {
-      name: 'Lareira',
-      url: 'https://soundbible.com/mp3/Fire_Burning-JaBa-810606592.mp3'
-    },
-    'birds': {
-      name: 'Pássaros',
-      url: 'https://soundbible.com/mp3/songbird-Daniel_Simion-1851957503.mp3'
+  // Initialize audio
+  function initAudio(soundKey) {
+    if (currentAudio) {
+      currentAudio.pause();
+      currentAudio = null;
     }
-  };
-  // Define o som inicial
-  audioPlayer.src = sounds[currentSound].url;
-  audioPlayer.volume = volume / 100;
 
-  soundButtons.forEach(button => {
-    button.addEventListener('click', function() {
-      const soundId = this.getAttribute('data-sound');
+    currentSound = soundKey;
+    currentAudio = new Audio(sounds[soundKey].url);
+    currentAudio.volume = currentVolume;
+    currentAudio.loop = true;
+    currentSoundDisplay.textContent = sounds[soundKey].name;
 
-      // Atualiza o botão ativo
-      soundButtons.forEach(btn => {
-        btn.classList.remove('active');
-        btn.setAttribute('aria-pressed', 'false');
-      });
-      this.classList.add('active');
-      this.setAttribute('aria-pressed', 'true');
-
-      // Atualiza o som atual
-      currentSound = soundId;
-      currentSoundDisplay.textContent = sounds[soundId].name;
-
-      // Atualiza a fonte de áudio
-      audioPlayer.src = sounds[soundId].url;
-
-      // Se já estiver tocando, continua tocando o novo som
-      if (isPlaying) {
-        audioPlayer.play().catch(e => console.log('Falha ao reproduzir áudio:', e));
-      }
-    });
-  });
-  soundToggle.addEventListener('click', function() {
     if (isPlaying) {
-      audioPlayer.pause();
+      currentAudio.play();
+    }
+  }
+
+  // Set active button
+  function setActiveButton(soundKey) {
+    allSoundButtons.forEach(button => {
+      const buttonSound = button.getAttribute('data-sound');
+      button.classList.toggle('active', buttonSound === soundKey);
+      button.setAttribute('aria-pressed', buttonSound === soundKey ? 'true' : 'false');
+    });
+  }
+
+  // Toggle play/pause
+  function togglePlayPause() {
+    if (!currentAudio) {
+      initAudio(currentSound);
+    }
+
+    if (isPlaying) {
+      currentAudio.pause();
       soundToggleIcon.classList.remove('lucide-pause');
       soundToggleIcon.classList.add('lucide-play');
-      soundToggle.setAttribute('aria-label', 'Reproduzir som');
     } else {
-      audioPlayer.play().catch(e => console.log('Falha ao reproduzir áudio:', e));
+      currentAudio.play();
       soundToggleIcon.classList.remove('lucide-play');
       soundToggleIcon.classList.add('lucide-pause');
-      soundToggle.setAttribute('aria-label', 'Pausar som');
     }
 
     isPlaying = !isPlaying;
-  });
+  }
 
-  volumeSlider.addEventListener('input', function() {
-    volume = this.value;
-    audioPlayer.volume = volume / 100;
+  // Toggle mute
+  function toggleMute() {
+    if (!currentAudio) return;
 
-    // Atualiza o botão de mudo se o volume for alterado
-    if (volume === 0) {
+    if (currentAudio.volume > 0) {
+      currentAudio.volume = 0;
       volumeIcon.classList.remove('lucide-volume-2');
       volumeIcon.classList.add('lucide-volume-x');
-      isMuted = true;
-    } else if (isMuted) {
-      volumeIcon.classList.remove('lucide-volume-x');
-      volumeIcon.classList.add('lucide-volume-2');
-      isMuted = false;
-    }
-  });
-
-  soundMute.addEventListener('click', function() {
-    if (isMuted) {
-      audioPlayer.volume = volume / 100;
-      volumeIcon.classList.remove('lucide-volume-x');
-      volumeIcon.classList.add('lucide-volume-2');
-      soundMute.setAttribute('aria-label', 'Silenciar');
     } else {
-      audioPlayer.volume = 0;
-      volumeIcon.classList.remove('lucide-volume-2');
-      volumeIcon.classList.add('lucide-volume-x');
-      soundMute.setAttribute('aria-label', 'Ativar som');
+      currentAudio.volume = currentVolume;
+      updateVolumeIcon();
     }
+  }
 
-    isMuted = !isMuted;
+  // Update volume
+  function updateVolume() {
+    currentVolume = volumeSlider.value / 100;
+    if (currentAudio) {
+      currentAudio.volume = currentVolume;
+    }
+    updateVolumeIcon();
+  }
+
+  // Update volume icon based on volume level
+  function updateVolumeIcon() {
+    if (currentVolume === 0) {
+      volumeIcon.classList.remove('lucide-volume-1', 'lucide-volume-2');
+      volumeIcon.classList.add('lucide-volume-x');
+    } else if (currentVolume < 0.5) {
+      volumeIcon.classList.remove('lucide-volume-x', 'lucide-volume-2');
+      volumeIcon.classList.add('lucide-volume-1');
+    } else {
+      volumeIcon.classList.remove('lucide-volume-x', 'lucide-volume-1');
+      volumeIcon.classList.add('lucide-volume-2');
+    }
+  }
+
+  // Event listeners
+  allSoundButtons.forEach(button => {
+    button.addEventListener('click', function() {
+      const soundKey = this.getAttribute('data-sound');
+      initAudio(soundKey);
+      setActiveButton(soundKey);
+      
+      if (isPlaying) {
+        currentAudio.play();
+      }
+    });
   });
+
+  soundToggle.addEventListener('click', togglePlayPause);
+  soundMute.addEventListener('click', toggleMute);
+  volumeSlider.addEventListener('input', updateVolume);
+
+  // Initialize with rain sound
+  initAudio('rain');
+  setActiveButton('rain');
+});
