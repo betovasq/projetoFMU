@@ -341,3 +341,117 @@ setInterval(showNextItem, 5000);
     audio.play().catch(e => console.log('Falha ao reproduzir áudio:', e));
   }
 });
+
+// Reprodutor de Sons
+  const soundButtons = document.querySelectorAll('.btn-sound');
+  const soundToggle = document.getElementById('sound-toggle');
+  const soundToggleIcon = document.getElementById('sound-toggle-icon');
+  const volumeSlider = document.getElementById('volume-slider');
+  const soundMute = document.getElementById('sound-mute');
+  const volumeIcon = document.getElementById('volume-icon');
+  const currentSoundDisplay = document.getElementById('current-sound');
+  const audioPlayer = document.getElementById('audio-player');
+
+  let isPlaying = false;
+  let isMuted = false;
+  let currentSound = 'rain';
+  let volume = 50;
+
+  const sounds = {
+    'rain': {
+      name: 'Chuva',
+      url: 'https://soundbible.com/mp3/rain_thunder-Mike_Koenig-739006097.mp3'
+    },
+    'forest': {
+      name: 'Floresta',
+      url: 'https://soundbible.com/mp3/forest_amb-Mike_Koenig-1833732834.mp3'
+    },
+    'waves': {
+      name: 'Ondas',
+      url: 'https://soundbible.com/mp3/Ocean_Waves-Mike_Koenig-980635569.mp3'
+    },
+    'fire': {
+      name: 'Lareira',
+      url: 'https://soundbible.com/mp3/Fire_Burning-JaBa-810606592.mp3'
+    },
+    'birds': {
+      name: 'Pássaros',
+      url: 'https://soundbible.com/mp3/songbird-Daniel_Simion-1851957503.mp3'
+    }
+  };
+  // Define o som inicial
+  audioPlayer.src = sounds[currentSound].url;
+  audioPlayer.volume = volume / 100;
+
+  soundButtons.forEach(button => {
+    button.addEventListener('click', function() {
+      const soundId = this.getAttribute('data-sound');
+
+      // Atualiza o botão ativo
+      soundButtons.forEach(btn => {
+        btn.classList.remove('active');
+        btn.setAttribute('aria-pressed', 'false');
+      });
+      this.classList.add('active');
+      this.setAttribute('aria-pressed', 'true');
+
+      // Atualiza o som atual
+      currentSound = soundId;
+      currentSoundDisplay.textContent = sounds[soundId].name;
+
+      // Atualiza a fonte de áudio
+      audioPlayer.src = sounds[soundId].url;
+
+      // Se já estiver tocando, continua tocando o novo som
+      if (isPlaying) {
+        audioPlayer.play().catch(e => console.log('Falha ao reproduzir áudio:', e));
+      }
+    });
+  });
+  soundToggle.addEventListener('click', function() {
+    if (isPlaying) {
+      audioPlayer.pause();
+      soundToggleIcon.classList.remove('lucide-pause');
+      soundToggleIcon.classList.add('lucide-play');
+      soundToggle.setAttribute('aria-label', 'Reproduzir som');
+    } else {
+      audioPlayer.play().catch(e => console.log('Falha ao reproduzir áudio:', e));
+      soundToggleIcon.classList.remove('lucide-play');
+      soundToggleIcon.classList.add('lucide-pause');
+      soundToggle.setAttribute('aria-label', 'Pausar som');
+    }
+
+    isPlaying = !isPlaying;
+  });
+
+  volumeSlider.addEventListener('input', function() {
+    volume = this.value;
+    audioPlayer.volume = volume / 100;
+
+    // Atualiza o botão de mudo se o volume for alterado
+    if (volume === 0) {
+      volumeIcon.classList.remove('lucide-volume-2');
+      volumeIcon.classList.add('lucide-volume-x');
+      isMuted = true;
+    } else if (isMuted) {
+      volumeIcon.classList.remove('lucide-volume-x');
+      volumeIcon.classList.add('lucide-volume-2');
+      isMuted = false;
+    }
+  });
+
+  soundMute.addEventListener('click', function() {
+    if (isMuted) {
+      audioPlayer.volume = volume / 100;
+      volumeIcon.classList.remove('lucide-volume-x');
+      volumeIcon.classList.add('lucide-volume-2');
+      soundMute.setAttribute('aria-label', 'Silenciar');
+    } else {
+      audioPlayer.volume = 0;
+      volumeIcon.classList.remove('lucide-volume-2');
+      volumeIcon.classList.add('lucide-volume-x');
+      soundMute.setAttribute('aria-label', 'Ativar som');
+    }
+
+    isMuted = !isMuted;
+  });
