@@ -24,7 +24,7 @@
 .dark {
   --background: #0f172a;
   --foreground: #f8fafc;
-  --muted: #1e293b;
+  --muted: #182130;
   --muted-foreground: #94a3b8;
   --card: #1e293b;
   --card-foreground: #f8fafc;
@@ -558,4 +558,38 @@ input[type="range"]::-moz-range-thumb {
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
   border-width: 0;
+}
+/* Container do vídeo (proporção 16:9) */
+.video-container {
+  position: relative;
+  width: 100%;
+  padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+  height: 0;
+  margin-bottom: 1rem; /* Espaço entre o vídeo e o botão */
+  overflow: hidden;
+}
+
+.video-container iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+/* Remove largura/altura fixas do iframe original */
+.resource-card iframe {
+  width: 100% !important;
+  height: 100% !important;
+}
+.resources-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+@media (max-width: 600px) {
+  .video-container {
+    padding-bottom: 75%; /* Muda para proporção 4:3 em telas pequenas */
+  }
 }
