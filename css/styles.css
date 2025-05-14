@@ -740,3 +740,218 @@ input[type="range"]::-moz-range-thumb {
     padding: 1.5rem;
   }
 }
+.accordion {
+      width: 100%;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    
+    .accordion-item {
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      margin-bottom: 0.5rem;
+      overflow: hidden;
+    }
+    
+    .accordion-item:first-child {
+      border-top-left-radius: var(--radius);
+      border-top-right-radius: var(--radius);
+    }
+    
+    .accordion-item:last-child {
+      border-bottom-left-radius: var(--radius);
+      border-bottom-right-radius: var(--radius);
+    }
+    
+    .accordion-header {
+      background-color: var(--card);
+      padding: 1rem 1.5rem;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: 600;
+      transition: background-color 0.2s;
+    }
+    
+    .accordion-header:hover {
+      background-color: var(--muted);
+    }
+    
+    .accordion-header .icon {
+      transition: transform 0.3s ease;
+    }
+    
+    .accordion-item.active .accordion-header .icon {
+      transform: rotate(180deg);
+    }
+    
+    .accordion-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+      background-color: var(--card);
+    }
+    
+    .accordion-item.active .accordion-content {
+      max-height: 5000px; /* Valor grande o suficiente para o conteúdo */
+    }
+    
+    .accordion-body {
+      padding: 0 1.5rem 1.5rem;
+    }
+    
+    /* Estilos Gerais do Header */
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 70px;
+  background-color: var(--background);
+  border-bottom: 1px solid var(--border);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+}
+
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: var(--foreground);
+  text-decoration: none;
+}
+
+/* Menu Desktop */
+.desktop-nav {
+  display: none;
+}
+
+.nav-list {
+  display: flex;
+  list-style: none;
+  gap: 25px;
+}
+
+.nav-link {
+  color: var(--foreground);
+  font-weight: 500;
+  text-decoration: none;
+  transition: color 0.3s;
+  font-size: 1rem;
+  position: relative;
+  padding: 5px 0;
+}
+
+.nav-link:hover {
+  color: var(--primary);
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: var(--primary);
+  transition: width 0.3s;
+}
+
+.nav-link:hover::after {
+  width: 100%;
+}
+
+/* Menu Mobile - Ícone Hamburguer */
+.mobile-menu-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  color: var(--foreground);
+  font-size: 1.8rem;
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  transition: background-color 0.3s;
+}
+
+.mobile-menu-toggle:hover {
+  background-color: var(--muted);
+}
+
+/* Menu Mobile - Conteúdo */
+.mobile-nav {
+  position: fixed;
+  top: 70px;
+  left: 0;
+  width: 100%;
+  height: calc(100vh - 70px);
+  background-color: var(--background);
+  transform: translateX(100%);
+  transition: transform 0.4s ease-in-out;
+  z-index: 999;
+  overflow-y: auto;
+  padding: 20px;
+}
+
+.mobile-nav.active {
+  transform: translateX(0);
+}
+
+.mobile-nav-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.mobile-nav-list .nav-link {
+  display: block;
+  padding: 12px 15px;
+  border-radius: 6px;
+  font-size: 1.1rem;
+  transition: all 0.3s;
+}
+
+.mobile-nav-list .nav-link:hover {
+  background-color: var(--muted);
+  color: var(--primary);
+}
+
+/* Header Actions */
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Media Queries - Desktop */
+@media (min-width: 992px) {
+  .desktop-nav {
+    display: block;
+  }
+  
+  .mobile-menu-toggle {
+    display: none;
+  }
+  
+  .mobile-nav {
+    display: none;
+  }
+}

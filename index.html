@@ -8,37 +8,58 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
   <!-- CSS (opcional, apenas se precisar de estilos específicos) -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lucide@latest/dist/umd/lucide.css">
-
-<!-- JavaScript -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lucide@latest/dist/umd/lucide.css">
 <script src="https://cdn.jsdelivr.net/npm/lucide@latest"></script>
+<script>
+  // Inicializar ícones Lucide
+  document.addEventListener('DOMContentLoaded', function() {
+    lucide.createIcons();
+  });
+</script>
 </head>
 <body>
   <div class="wrapper">
     <header class="header">
-      <div class="container header-container">
-        <a href="#" class="logo">
-          <i class="lucide-moon"></i>
-          <span>MindSpace</span>
-        </a>
-        <nav class="main-nav">
-         <ul class="nav-list">
-            <li><a href="#relaxation" class="nav-link">Relaxamento</a></li>
-            <li><a href="#focus" class="nav-link">Concentração</a></li>
-            <li><a href="#sounds" class="nav-link">Sons Ambientes</a></li>
-            <li><a href="#resources" class="nav-link">Recursos</a></li>
-            <li><a href="#about" class="nav-link">Sobre Nós</a></li>
-        </ul>
-        </nav>
-        <div class="header-actions">
-          <button id="theme-toggle" class="btn btn-icon" aria-label="Alternar tema claro/escuro">
-            <span id="theme-icon">🌙</span>
-          </button>
-          <button class="btn btn-menu" id="menu-toggle" aria-label="Abrir menu">
-            Menu
-          </button>
-        </div>
-      </div>
-    </header>
+  <div class="container header-container">
+    <a href="#" class="logo">
+      <i class="lucide-moon"></i>
+      <span>MindSpace</span>
+    </a>
+    
+    <!-- Menu Desktop (visível em telas maiores) -->
+    <nav class="desktop-nav">
+      <ul class="nav-list">
+        <li><a href="#relaxation" class="nav-link">Relaxamento</a></li>
+        <li><a href="#focus" class="nav-link">Concentração</a></li>
+        <li><a href="#sounds" class="nav-link">Sons Ambientes</a></li>
+        <li><a href="#resources" class="nav-link">Recursos</a></li>
+        <li><a href="#about" class="nav-link">Sobre Nós</a></li>
+      </ul>
+    </nav>
+    
+    <!-- Menu Mobile (ícone hamburguer) -->
+    <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Abrir menu">
+      <i class="lucide-menu" id="menu-icon"> ≡ </i>
+    </button>
+    
+    <!-- Menu Mobile (conteúdo) -->
+    <nav class="mobile-nav" id="mobile-nav">
+      <ul class="mobile-nav-list">
+        <li><a href="#relaxation" class="nav-link">Relaxamento</a></li>
+        <li><a href="#focus" class="nav-link">Concentração</a></li>
+        <li><a href="#sounds" class="nav-link">Sons Ambientes</a></li>
+        <li><a href="#resources" class="nav-link">Recursos</a></li>
+        <li><a href="#about" class="nav-link">Sobre Nós</a></li>
+      </ul>
+    </nav>
+    
+    <div class="header-actions">
+      <button id="theme-toggle" class="btn btn-icon" aria-label="Alternar tema claro/escuro">
+        <span id="theme-icon">🌙</span>
+      </button>
+    </div>
+  </div>
+</header>
     <main>
       <section class="hero">
         <!-- Carrossel de imagens como background -->
@@ -55,9 +76,9 @@
                 <h1>Bem-vindo ao MindSpace</h1>
                 <p>Um espaço seguro para relaxar sua mente e melhorar sua concentração.</p>
                 <div class="hero-buttons">
-                    <a href="#relaxation" class="btn btn-outline">Começar a Relaxar</a>
-                    <a href="#focus" class="btn btn-outline">Melhorar Concentração</a>
-                    <a href="#sounds" class="btn btn-outline">Escutar Música e sons Ambientes</a>
+                    <a href="#relaxation" class="btn btn-primary">Começar a Relaxar</a>
+                    <a href="#focus" class="btn btn-primary">Melhorar Concentração</a>
+                    <a href="#sounds" class="btn btn-primary">Escutar Música e sons Ambientes</a>
                 </div>
             </div>
         </div>
@@ -304,27 +325,54 @@
           </div>
         </div>
       </section>
-            <section id="privacy" class="section section-alt">
-        <div class="container">
-          <div class="section-header">
-            <h2>Política de Privacidade</h2>
-            <p>Última atualização: <span id="privacy-date"></span></p>
-          </div>
 
-          <div class="privacy-content">
-            <div class="privacy-card">
-              <h3>1. Introdução</h3>
+       <section id="privacy" class="section section-alt">
+    <div class="container">
+      <div class="section-header">
+        <h2>Política de Privacidade</h2>
+        <p>Última atualização: <span id="privacy-date"></span></p>
+      </div>
+
+      <div class="accordion">
+        <!-- Item 1 -->
+        <div class="accordion-item">
+          <div class="accordion-header">
+            <span>1. Introdução</span>
+            <i class="lucide lucide-chevron-down icon"></i>
+          </div>
+          <div class="accordion-content">
+            <div class="accordion-body">
               <p>Bem-vindo ao MindSpace. Nós levamos sua privacidade a sério e estamos comprometidos em proteger seus dados pessoais. Esta política explica como coletamos, usamos e protegemos suas informações quando você usa nosso site.</p>
-              
-              <h3>2. Informações que Coletamos</h3>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Item 2 -->
+        <div class="accordion-item">
+          <div class="accordion-header">
+            <span>2. Informações que Coletamos</span>
+            <i class="lucide lucide-chevron-down icon"></i>
+          </div>
+          <div class="accordion-content">
+            <div class="accordion-body">
               <p>Nós coletamos apenas o mínimo necessário para fornecer nossos serviços:</p>
               <ul>
                 <li><strong>Dados de uso:</strong> Informações sobre como você interage com nosso site (páginas visitadas, tempo gasto).</li>
                 <li><strong>Preferências:</strong> Suas configurações de tema (claro/escuro) são armazenadas localmente.</li>
                 <li><strong>Cookies:</strong> Usamos cookies essenciais para funcionalidade básica do site.</li>
               </ul>
-              
-              <h3>3. Como Usamos Suas Informações</h3>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Item 3 -->
+        <div class="accordion-item">
+          <div class="accordion-header">
+            <span>3. Como Usamos Suas Informações</span>
+            <i class="lucide lucide-chevron-down icon"></i>
+          </div>
+          <div class="accordion-content">
+            <div class="accordion-body">
               <p>Seus dados são usados para:</p>
               <ul>
                 <li>Fornecer e melhorar nossos serviços</li>
@@ -332,24 +380,54 @@
                 <li>Garantir a segurança do site</li>
                 <li>Analisar uso agregado para melhorias</li>
               </ul>
-              
-              <h3>4. Compartilhamento de Dados</h3>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Item 4 -->
+        <div class="accordion-item">
+          <div class="accordion-header">
+            <span>4. Compartilhamento de Dados</span>
+            <i class="lucide lucide-chevron-down icon"></i>
+          </div>
+          <div class="accordion-content">
+            <div class="accordion-body">
               <p>Não vendemos, alugamos ou compartilhamos seus dados pessoais com terceiros, exceto:</p>
               <ul>
                 <li>Quando exigido por lei</li>
                 <li>Para proteger nossos direitos legais</li>
                 <li>Com provedores de serviços essenciais (sob contratos de confidencialidade)</li>
               </ul>
-              
-              <h3>5. Segurança de Dados</h3>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Item 5 -->
+        <div class="accordion-item">
+          <div class="accordion-header">
+            <span>5. Segurança de Dados</span>
+            <i class="lucide lucide-chevron-down icon"></i>
+          </div>
+          <div class="accordion-content">
+            <div class="accordion-body">
               <p>Implementamos medidas técnicas e organizacionais para proteger suas informações, incluindo:</p>
               <ul>
                 <li>Criptografia HTTPS</li>
                 <li>Armazenamento local seguro</li>
                 <li>Minimização de coleta de dados</li>
               </ul>
-              
-              <h3>6. Seus Direitos</h3>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Item 6 -->
+        <div class="accordion-item">
+          <div class="accordion-header">
+            <span>6. Seus Direitos</span>
+            <i class="lucide lucide-chevron-down icon"></i>
+          </div>
+          <div class="accordion-content">
+            <div class="accordion-body">
               <p>Você tem o direito de:</p>
               <ul>
                 <li>Acessar os dados que mantemos sobre você</li>
@@ -357,16 +435,39 @@
                 <li>Excluir dados pessoais (quando aplicável)</li>
                 <li>Desativar cookies no seu navegador</li>
               </ul>
-              
-              <h3>7. Alterações a Esta Política</h3>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Item 7 -->
+        <div class="accordion-item">
+          <div class="accordion-header">
+            <span>7. Alterações a Esta Política</span>
+            <i class="lucide lucide-chevron-down icon"></i>
+          </div>
+          <div class="accordion-content">
+            <div class="accordion-body">
               <p>Podemos atualizar esta política periodicamente. A versão mais recente estará sempre disponível nesta página, com a data de atualização claramente indicada.</p>
-              
-              <h3>8. Contato</h3>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Item 8 -->
+        <div class="accordion-item">
+          <div class="accordion-header">
+            <span>8. Contato</span>
+            <i class="lucide lucide-chevron-down icon"></i>
+          </div>
+          <div class="accordion-content">
+            <div class="accordion-body">
               <p>Para dúvidas sobre esta política ou seus dados pessoais, entre em contato conosco em: <a href="mailto:privacidade@mindspace.example">privacidade@mindspace.example</a></p>
             </div>
           </div>
         </div>
-      </section>
+      </div>
+    </div>
+  </section>
+
     <footer class="footer">
       <div class="container">
         <div class="footer-links">

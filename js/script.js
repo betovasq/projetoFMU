@@ -515,3 +515,79 @@ document.addEventListener('DOMContentLoaded', function() {
   updateVolumeIcon();
   updatePlayIcon();
 });
+ // Script para o accordion
+    document.addEventListener('DOMContentLoaded', function() {
+      const accordionItems = document.querySelectorAll('.accordion-item');
+      
+      accordionItems.forEach(item => {
+        const header = item.querySelector('.accordion-header');
+        
+        header.addEventListener('click', () => {
+          // Fecha todos os outros itens
+          accordionItems.forEach(otherItem => {
+            if (otherItem !== item) {
+              otherItem.classList.remove('active');
+            }
+          });
+          
+          // Alterna o item clicado
+          item.classList.toggle('active');
+        });
+      });
+      
+      // Abre o primeiro item por padrão
+      if (accordionItems.length > 0) {
+        accordionItems[0].classList.add('active');
+      }
+      
+      // Define a data de atualização
+      const currentDate = new Date();
+      const formattedDate = currentDate.toLocaleDateString('pt-BR', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric'
+      });
+      document.getElementById('privacy-date').textContent = formattedDate;
+    });
+    document.addEventListener('DOMContentLoaded', function() {
+  const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+  const mobileNav = document.getElementById('mobile-nav');
+  const menuIcon = document.getElementById('menu-icon');
+  
+  // Alternar menu mobile
+  mobileMenuToggle.addEventListener('click', function() {
+    mobileNav.classList.toggle('active');
+    
+    // Animação do ícone
+    if (mobileNav.classList.contains('active')) {
+      menuIcon.classList.remove('lucide-menu');
+      menuIcon.classList.add('lucide-x');
+      document.body.style.overflow = 'hidden'; // Trava o scroll
+    } else {
+      menuIcon.classList.remove('lucide-x');
+      menuIcon.classList.add('lucide-menu');
+      document.body.style.overflow = ''; // Libera o scroll
+    }
+  });
+  
+  // Fechar menu ao clicar em um link (mobile)
+  const mobileLinks = document.querySelectorAll('.mobile-nav .nav-link');
+  mobileLinks.forEach(link => {
+    link.addEventListener('click', function() {
+      mobileNav.classList.remove('active');
+      menuIcon.classList.remove('lucide-x');
+      menuIcon.classList.add('lucide-menu');
+      document.body.style.overflow = ''; // Libera o scroll
+    });
+  });
+  
+  // Fechar menu ao redimensionar para desktop
+  window.addEventListener('resize', function() {
+    if (window.innerWidth >= 992) {
+      mobileNav.classList.remove('active');
+      menuIcon.classList.remove('lucide-x');
+      menuIcon.classList.add('lucide-menu');
+      document.body.style.overflow = ''; // Libera o scroll
+    }
+  });
+});
