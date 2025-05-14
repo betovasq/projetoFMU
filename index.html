@@ -6,7 +6,11 @@
   <title>MindSpace - Relaxamento e Concentração</title>
   <link rel="stylesheet" href="css/styles.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lucide-icons@0.284.0/font/lucide.min.css">
+  <!-- CSS (opcional, apenas se precisar de estilos específicos) -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lucide@latest/dist/umd/lucide.css">
+
+<!-- JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/lucide@latest"></script>
 </head>
 <body>
   <div class="wrapper">
@@ -17,12 +21,13 @@
           <span>MindSpace</span>
         </a>
         <nav class="main-nav">
-          <ul class="nav-list">
+         <ul class="nav-list">
             <li><a href="#relaxation" class="nav-link">Relaxamento</a></li>
             <li><a href="#focus" class="nav-link">Concentração</a></li>
             <li><a href="#sounds" class="nav-link">Sons Ambientes</a></li>
             <li><a href="#resources" class="nav-link">Recursos</a></li>
-          </ul>
+            <li><a href="#about" class="nav-link">Sobre Nós</a></li>
+        </ul>
         </nav>
         <div class="header-actions">
           <button id="theme-toggle" class="btn btn-icon" aria-label="Alternar tema claro/escuro">
@@ -50,8 +55,9 @@
                 <h1>Bem-vindo ao MindSpace</h1>
                 <p>Um espaço seguro para relaxar sua mente e melhorar sua concentração.</p>
                 <div class="hero-buttons">
-                    <a href="#relaxation" class="btn btn-primary">Começar a Relaxar</a>
+                    <a href="#relaxation" class="btn btn-outline">Começar a Relaxar</a>
                     <a href="#focus" class="btn btn-outline">Melhorar Concentração</a>
+                    <a href="#sounds" class="btn btn-outline">Escutar Música e sons Ambientes</a>
                 </div>
             </div>
         </div>
@@ -245,12 +251,127 @@
         </div>
       </section>
     </main>
+      <section id="about" class="section">
+        <div class="container">
+          <div class="section-header">
+            <h2>Sobre Nós</h2>
+            <p>Conheça a equipe por trás do MindSpace e nossa missão</p>
+          </div>
 
+          <div class="about-content">
+            <div class="about-text">
+              <h3>Nossa Missão</h3>
+              <p>O MindSpace nasceu da necessidade de criar um refúgio digital para quem busca alívio do estresse e melhoria na concentração. Em um mundo cada vez mais acelerado, queremos oferecer ferramentas simples e eficazes para ajudar você a encontrar seu equilíbrio.</p>
+              
+              <h3>Nossa História</h3>
+              <p>Fundado em 2023 por um grupo de entusiastas de bem-estar digital e desenvolvedores, o MindSpace começou como um projeto pessoal e rapidamente se transformou em uma plataforma utilizada por milhares de pessoas diariamente.</p>
+              
+              <h3>Nossa Equipe</h3>
+              <p>Somos uma equipe multidisciplinar composta por psicólogos, designers e desenvolvedores comprometidos em criar experiências digitais que realmente façam diferença na sua qualidade de vida.</p>
+            </div>
+
+            <div class="about-image">
+              <div class="image-container">
+                <img src="css/img/team-placeholder.jpg" alt="Equipe MindSpace" class="team-image">
+              </div>
+            </div>
+          </div>
+
+          <div class="values-grid">
+            <div class="value-card">
+              <div class="value-icon">
+                <i class="lucide-heart"></i>
+              </div>
+              <h4>Bem-estar</h4>
+              <p>Priorizamos sua saúde mental acima de tudo em nosso design e funcionalidades.</p>
+            </div>
+            
+            <div class="value-card">
+              <div class="value-icon">
+                <i class="lucide-shield"></i>
+              </div>
+              <h4>Privacidade</h4>
+              <p>Seus dados são seus. Não coletamos informações pessoais sem sua permissão.</p>
+            </div>
+            
+            <div class="value-card">
+              <div class="value-icon">
+                <i class="lucide-sparkles"></i>
+              </div>
+              <h4>Simplicidade</h4>
+              <p>Interface limpa e intuitiva para que você possa focar no que realmente importa.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+            <section id="privacy" class="section section-alt">
+        <div class="container">
+          <div class="section-header">
+            <h2>Política de Privacidade</h2>
+            <p>Última atualização: <span id="privacy-date"></span></p>
+          </div>
+
+          <div class="privacy-content">
+            <div class="privacy-card">
+              <h3>1. Introdução</h3>
+              <p>Bem-vindo ao MindSpace. Nós levamos sua privacidade a sério e estamos comprometidos em proteger seus dados pessoais. Esta política explica como coletamos, usamos e protegemos suas informações quando você usa nosso site.</p>
+              
+              <h3>2. Informações que Coletamos</h3>
+              <p>Nós coletamos apenas o mínimo necessário para fornecer nossos serviços:</p>
+              <ul>
+                <li><strong>Dados de uso:</strong> Informações sobre como você interage com nosso site (páginas visitadas, tempo gasto).</li>
+                <li><strong>Preferências:</strong> Suas configurações de tema (claro/escuro) são armazenadas localmente.</li>
+                <li><strong>Cookies:</strong> Usamos cookies essenciais para funcionalidade básica do site.</li>
+              </ul>
+              
+              <h3>3. Como Usamos Suas Informações</h3>
+              <p>Seus dados são usados para:</p>
+              <ul>
+                <li>Fornecer e melhorar nossos serviços</li>
+                <li>Manter suas preferências pessoais</li>
+                <li>Garantir a segurança do site</li>
+                <li>Analisar uso agregado para melhorias</li>
+              </ul>
+              
+              <h3>4. Compartilhamento de Dados</h3>
+              <p>Não vendemos, alugamos ou compartilhamos seus dados pessoais com terceiros, exceto:</p>
+              <ul>
+                <li>Quando exigido por lei</li>
+                <li>Para proteger nossos direitos legais</li>
+                <li>Com provedores de serviços essenciais (sob contratos de confidencialidade)</li>
+              </ul>
+              
+              <h3>5. Segurança de Dados</h3>
+              <p>Implementamos medidas técnicas e organizacionais para proteger suas informações, incluindo:</p>
+              <ul>
+                <li>Criptografia HTTPS</li>
+                <li>Armazenamento local seguro</li>
+                <li>Minimização de coleta de dados</li>
+              </ul>
+              
+              <h3>6. Seus Direitos</h3>
+              <p>Você tem o direito de:</p>
+              <ul>
+                <li>Acessar os dados que mantemos sobre você</li>
+                <li>Solicitar a correção de informações incorretas</li>
+                <li>Excluir dados pessoais (quando aplicável)</li>
+                <li>Desativar cookies no seu navegador</li>
+              </ul>
+              
+              <h3>7. Alterações a Esta Política</h3>
+              <p>Podemos atualizar esta política periodicamente. A versão mais recente estará sempre disponível nesta página, com a data de atualização claramente indicada.</p>
+              
+              <h3>8. Contato</h3>
+              <p>Para dúvidas sobre esta política ou seus dados pessoais, entre em contato conosco em: <a href="mailto:privacidade@mindspace.example">privacidade@mindspace.example</a></p>
+            </div>
+          </div>
+        </div>
+      </section>
     <footer class="footer">
       <div class="container">
         <div class="footer-links">
-          <a href="#" class="footer-link">Sobre Nós</a>
-          <a href="#" class="footer-link">Política de Privacidade</a>
+          <a href="#about" class="footer-link">Sobre Nós</a>
+          <a href="#privacy" class="footer-link">Política de Privacidade</a>
         </div>
         <p class="copyright">© <span id="current-year"></span> MindSpace. Todos os direitos reservados.</p>
       </div>
@@ -258,14 +379,13 @@
   </div>
 
   <audio id="audio-player" loop></audio>
-  <script src="js/script.js"></script>
-  <!-- Development version -->
-<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
-
-<!-- Production version -->
-<script src="https://unpkg.com/lucide@latest"></script>
- <script>
+<script>
+  // Inicializa os ícones
+  document.addEventListener('DOMContentLoaded', function() {
     lucide.createIcons();
-  </script>
+  });
+</script>
+  <script src="js/script.js"></script>
+
 </body>
 </html>

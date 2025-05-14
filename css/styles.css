@@ -593,3 +593,150 @@ input[type="range"]::-moz-range-thumb {
     padding-bottom: 75%; /* Muda para proporção 4:3 em telas pequenas */
   }
 }
+
+/* About Section */
+.about-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  margin-bottom: 3rem;
+}
+
+@media (min-width: 768px) {
+  .about-content {
+    flex-direction: row;
+  }
+}
+
+.about-text {
+  flex: 2;
+}
+
+.about-text h3 {
+  margin-top: 1.5rem;
+  color: var(--primary);
+}
+
+.about-text h3:first-child {
+  margin-top: 0;
+}
+
+.about-image {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.image-container {
+  width: 100%;
+  max-width: 400px;
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.team-image {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Values Grid */
+.values-grid {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 1.5rem;
+  margin-top: 3rem;
+}
+
+@media (min-width: 640px) {
+  .values-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.value-card {
+  background-color: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  text-align: center;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.value-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.value-icon {
+  width: 3rem;
+  height: 3rem;
+  margin: 0 auto 1rem;
+  background-color: var(--primary);
+  color: var(--primary-foreground);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+}
+
+.value-card h4 {
+  margin-bottom: 0.5rem;
+  color: var(--primary);
+}
+
+.value-card p {
+  font-size: 0.875rem;
+  color: var(--muted-foreground);
+}
+/* Privacy Policy Section */
+.privacy-content {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.privacy-card {
+  background-color: var(--card);
+  border-radius: var(--radius);
+  padding: 2rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.privacy-card h3 {
+  color: var(--primary);
+  margin-top: 2rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.privacy-card h3:first-child {
+  margin-top: 0;
+}
+
+.privacy-card ul {
+  margin: 1rem 0;
+  padding-left: 1.5rem;
+}
+
+.privacy-card li {
+  margin-bottom: 0.5rem;
+  line-height: 1.6;
+}
+
+.privacy-card a {
+  color: var(--primary);
+  font-weight: 500;
+}
+
+.privacy-card a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+  .privacy-card {
+    padding: 1.5rem;
+  }
+}

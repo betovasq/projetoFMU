@@ -1,3 +1,4 @@
+
 document.addEventListener('DOMContentLoaded', function() {
   // Define o ano atual no rodapé
   document.getElementById('current-year').textContent = new Date().getFullYear();
@@ -367,13 +368,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   };
 
-  // Audio elements
-  let currentAudio = null;
-  let isPlaying = false;
-  let currentVolume = 0.5;
-  let currentSound = 'rain';
-
-  // DOM elements
+  // Elementos do DOM
   const soundButtons = document.querySelectorAll('.btn-sound');
   const soundToggle = document.getElementById('sound-toggle');
   const soundToggleIcon = document.getElementById('sound-toggle-icon');
@@ -381,39 +376,61 @@ document.addEventListener('DOMContentLoaded', function() {
   const soundMute = document.getElementById('sound-mute');
   const volumeIcon = document.getElementById('volume-icon');
   const volumeSlider = document.getElementById('volume-slider');
-  const soundButtonsContainer = document.querySelector('.sound-buttons');
 
-  // Update all sound buttons
-  const allSoundButtons = document.querySelectorAll('.btn-sound');
+  // Estado do player
+  let currentAudio = null;
+  let isPlaying = false;
+  let currentVolume = 0.5;
+  let currentSound = 'rain';
 
-  // Initialize audio
+  // Inicializa o áudio
   function initAudio(soundKey) {
+    // Pausa e descarta o áudio atual, se existir
     if (currentAudio) {
       currentAudio.pause();
       currentAudio = null;
     }
 
-    currentSound = soundKey;
+    // Cria novo elemento de áudio
     currentAudio = new Audio(sounds[soundKey].url);
     currentAudio.volume = currentVolume;
     currentAudio.loop = true;
+    currentSound = soundKey;
     currentSoundDisplay.textContent = sounds[soundKey].name;
 
+    // Configura eventos do áudio
+    currentAudio.addEventListener('play', () => {
+      isPlaying = true;
+      updatePlayIcon();
+    });
+
+    currentAudio.addEventListener('pause', () => {
+      isPlaying = false;
+      updatePlayIcon();
+    });
+
+    // Se estava tocando, continua a reprodução
     if (isPlaying) {
-      currentAudio.play();
+      currentAudio.play().catch(e => {
+        console.error("Erro ao reproduzir áudio:", e);
+        isPlaying = false;
+        updatePlayIcon();
+      });
     }
   }
 
-  // Set active button
-  function setActiveButton(soundKey) {
-    allSoundButtons.forEach(button => {
-      const buttonSound = button.getAttribute('data-sound');
-      button.classList.toggle('active', buttonSound === soundKey);
-      button.setAttribute('aria-pressed', buttonSound === soundKey ? 'true' : 'false');
-    });
+  // Atualiza ícone de play/pause
+  function updatePlayIcon() {
+    if (isPlaying) {
+      soundToggleIcon.classList.remove('lucide-play');
+      soundToggleIcon.classList.add('lucide-pause');
+    } else {
+      soundToggleIcon.classList.remove('lucide-pause');
+      soundToggleIcon.classList.add('lucide-play');
+    }
   }
 
-  // Toggle play/pause
+  // Alterna entre play/pause
   function togglePlayPause() {
     if (!currentAudio) {
       initAudio(currentSound);
@@ -421,24 +438,24 @@ document.addEventListener('DOMContentLoaded', function() {
 
     if (isPlaying) {
       currentAudio.pause();
-      soundToggleIcon.classList.remove('lucide-pause');
-      soundToggleIcon.classList.add('lucide-play');
     } else {
-      currentAudio.play();
-      soundToggleIcon.classList.remove('lucide-play');
-      soundToggleIcon.classList.add('lucide-pause');
+      currentAudio.play().catch(e => {
+        console.error("Erro ao reproduzir áudio:", e);
+        // Mostra alerta apenas se for uma restrição de autoplay
+        if (e.name === 'NotAllowedError') {
+          alert('Por favor, clique no botão "Play" para iniciar o som.');
+        }
+      });
     }
-
-    isPlaying = !isPlaying;
   }
 
-  // Toggle mute
+  // Alterna mudo
   function toggleMute() {
     if (!currentAudio) return;
 
     if (currentAudio.volume > 0) {
       currentAudio.volume = 0;
-      volumeIcon.classList.remove('lucide-volume-2');
+      volumeIcon.classList.remove('lucide-volume-2', 'lucide-volume-1');
       volumeIcon.classList.add('lucide-volume-x');
     } else {
       currentAudio.volume = currentVolume;
@@ -446,7 +463,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   }
 
-  // Update volume
+  // Atualiza volume
   function updateVolume() {
     currentVolume = volumeSlider.value / 100;
     if (currentAudio) {
@@ -455,7 +472,7 @@ document.addEventListener('DOMContentLoaded', function() {
     updateVolumeIcon();
   }
 
-  // Update volume icon based on volume level
+  // Atualiza ícone de volume
   function updateVolumeIcon() {
     if (currentVolume === 0) {
       volumeIcon.classList.remove('lucide-volume-1', 'lucide-volume-2');
@@ -469,16 +486,22 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   }
 
-  // Event listeners
-  allSoundButtons.forEach(button => {
+  // Define o botão ativo
+  function setActiveButton(soundKey) {
+    soundButtons.forEach(button => {
+      const buttonSound = button.getAttribute('data-sound');
+      const isActive = buttonSound === soundKey;
+      button.classList.toggle('active', isActive);
+      button.setAttribute('aria-pressed', isActive.toString());
+    });
+  }
+
+  // Event Listeners
+  soundButtons.forEach(button => {
     button.addEventListener('click', function() {
       const soundKey = this.getAttribute('data-sound');
       initAudio(soundKey);
       setActiveButton(soundKey);
-      
-      if (isPlaying) {
-        currentAudio.play();
-      }
     });
   });
 
@@ -486,7 +509,9 @@ document.addEventListener('DOMContentLoaded', function() {
   soundMute.addEventListener('click', toggleMute);
   volumeSlider.addEventListener('input', updateVolume);
 
-  // Initialize with rain sound
-  initAudio('rain');
-  setActiveButton('rain');
+  // Inicialização
+  initAudio(currentSound);
+  setActiveButton(currentSound);
+  updateVolumeIcon();
+  updatePlayIcon();
 });
