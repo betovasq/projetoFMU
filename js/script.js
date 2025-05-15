@@ -1,78 +1,46 @@
-
 document.addEventListener('DOMContentLoaded', function() {
-  // Define o ano atual no rodapé
-  document.getElementById('current-year').textContent = new Date().getFullYear();
-  
-  // Alternador de Tema
+  // ========== TEMA ==========
   const themeToggle = document.getElementById('theme-toggle');
   const themeIcon = document.getElementById('theme-icon');
   
-  // Verifica preferência de tema salva ou usa preferência do sistema
+  // Verifica preferência de tema
   const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
   const savedTheme = localStorage.getItem('theme');
   
   if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
     document.documentElement.classList.add('dark');
-    themeIcon.classList.remove('lucide-moon');
-    themeIcon.classList.add('lucide-sun');
+    themeIcon.textContent = "☀️";
   }
   
   themeToggle.addEventListener('click', function() {
     const isDark = document.documentElement.classList.toggle('dark');
     
     if (isDark) {
-      themeIcon.classList.remove('lucide-moon');
-      themeIcon.classList.add('lucide-sun');
+      themeIcon.textContent = "☀️";
       localStorage.setItem('theme', 'dark');
     } else {
-      themeIcon.classList.remove('lucide-sun');
-      themeIcon.classList.add('lucide-moon');
+      themeIcon.textContent = "🌙";
       localStorage.setItem('theme', 'light');
     }
   });
-  document.getElementById("theme-toggle").addEventListener("click", function () {
-    document.body.classList.toggle("dark-theme");
-    const themeIcon = document.getElementById("theme-icon");
-    if (document.body.classList.contains("dark-theme")) {
-      themeIcon.textContent = "☀️";
-    } else {
-      themeIcon.textContent = "🌙";
-    }
-  });
-  
-  // Alternador do Menu Mobile
-  const menuToggle = document.getElementById('menu-toggle');
-  const mainNav = document.querySelector('.main-nav');
-  
-  menuToggle.addEventListener('click', function() {
-    mainNav.style.display = mainNav.style.display === 'flex' ? 'none' : 'flex';
-  });
-  
- //script carrossel
- document.addEventListener('DOMContentLoaded', function() {
+
+  // ========== CARROSSEL ==========
   const carouselItems = document.querySelectorAll('.carousel-item');
   let currentItem = 0;
 
   function showNextItem() {
-    //remove a classe do item atualmente ativo
     carouselItems[currentItem].classList.remove('active');
-
-    //avança para o proximo item
-    currentItem(currentItem + 1) % carouselItems.length;
-
-    //adiciona a classe active a um novo item
+    currentItem = (currentItem + 1) % carouselItems.length;
     carouselItems[currentItem].classList.add('active');
   }
 
-  //inicia o carrossel (muda a cada 5 segundos)
-setInterval(showNextItem, 5000);
+  // Inicia o carrossel
+  if (carouselItems.length > 0) {
+    carouselItems[0].classList.add('active');
+    setInterval(showNextItem, 100000);
+  }
 
-  //garante que o primeiro item está ativo
-  carouselItems[0].classList.add('active');
-});
-
-
-  // Exercício de Respiração
+  // ========== EXERCÍCIO DE RESPIRAÇÃO ==========
   const breathingCircle = document.getElementById('breathing-circle');
   const breathingText = document.getElementById('breathing-text');
   const breathingToggle = document.getElementById('breathing-toggle');
@@ -105,8 +73,9 @@ setInterval(showNextItem, 5000);
     }
   };
   
+  // Atualiza técnica selecionada
   breathingTechnique.addEventListener('change', function() {
-    const technique = breathingTechnique.value;
+    const technique = this.value;
     breathingDescription.textContent = techniques[technique].description;
     
     if (isBreathingActive) {
@@ -115,6 +84,7 @@ setInterval(showNextItem, 5000);
     }
   });
   
+  // Controle do exercício
   breathingToggle.addEventListener('click', function() {
     if (isBreathingActive) {
       stopBreathingExercise();
@@ -127,7 +97,6 @@ setInterval(showNextItem, 5000);
     isBreathingActive = true;
     breathingToggle.textContent = 'Parar';
     breathingTimer = 0;
-    
     breathingInterval = setInterval(updateBreathingExercise, 1000);
   }
   
@@ -137,7 +106,6 @@ setInterval(showNextItem, 5000);
     breathingText.textContent = 'Prepare-se';
     breathingCircle.style.width = '200px';
     breathingCircle.style.height = '200px';
-    
     clearInterval(breathingInterval);
   }
   
@@ -162,12 +130,12 @@ setInterval(showNextItem, 5000);
         breathingCircle.style.width = `${size}px`;
         breathingCircle.style.height = `${size}px`;
       } else {
-        breathingTimer = 0;
+        breathingTimer = 0; // Reinicia o ciclo
       }
     }
     
     // Respiração Quadrada
-    if (breathingTechnique.value === 'box') {
+    else if (breathingTechnique.value === 'box') {
       if (breathingTimer <= technique.inhale) {
         breathingText.textContent = 'Inspire';
         const progress = breathingTimer / technique.inhale;
@@ -185,12 +153,12 @@ setInterval(showNextItem, 5000);
       } else if (breathingTimer <= technique.inhale + technique.hold + technique.exhale + technique.holdAfterExhale) {
         breathingText.textContent = 'Segure';
       } else {
-        breathingTimer = 0;
+        breathingTimer = 0; // Reinicia o ciclo
       }
     }
     
     // Respiração Calma
-    if (breathingTechnique.value === 'calm') {
+    else if (breathingTechnique.value === 'calm') {
       if (breathingTimer <= technique.inhale) {
         breathingText.textContent = 'Inspire';
         const progress = breathingTimer / technique.inhale;
@@ -204,12 +172,12 @@ setInterval(showNextItem, 5000);
         breathingCircle.style.width = `${size}px`;
         breathingCircle.style.height = `${size}px`;
       } else {
-        breathingTimer = 0;
+        breathingTimer = 0; // Reinicia o ciclo
       }
     }
   }
-  
-  // Timer de Foco
+
+  // ========== TIMER DE FOCO ==========
   const timerDisplay = document.getElementById('timer-display');
   const timerToggle = document.getElementById('timer-toggle');
   const timerReset = document.getElementById('timer-reset');
@@ -219,15 +187,14 @@ setInterval(showNextItem, 5000);
   const breakLengthDisplay = document.getElementById('break-length');
   const timerDescription = document.getElementById('timer-description');
   
-  let minutes = 25;
+  let minutes = parseInt(focusSlider.value);
   let seconds = 0;
   let timerInterval;
   let isTimerActive = false;
   let isTimerPaused = false;
-  let sessionType = 'focus'; // foco ou pausa
-  let focusLength = 25;
-  let breakLength = 5;
+  let sessionType = 'focus';
   
+  // Atualiza sliders
   focusSlider.addEventListener('input', function() {
     focusLength = parseInt(this.value);
     focusLengthDisplay.textContent = focusLength;
@@ -250,6 +217,7 @@ setInterval(showNextItem, 5000);
     }
   });
   
+  // Controles do timer
   timerToggle.addEventListener('click', function() {
     if (!isTimerActive) {
       startTimer();
@@ -266,21 +234,18 @@ setInterval(showNextItem, 5000);
     isTimerActive = true;
     isTimerPaused = false;
     timerToggle.innerHTML = '<i class="lucide-pause"></i> Pausar';
-    
     timerInterval = setInterval(updateTimer, 1000);
   }
   
   function pauseTimer() {
     isTimerPaused = true;
     timerToggle.innerHTML = '<i class="lucide-play"></i> Continuar';
-    
     clearInterval(timerInterval);
   }
   
   function resumeTimer() {
     isTimerPaused = false;
     timerToggle.innerHTML = '<i class="lucide-pause"></i> Pausar';
-    
     timerInterval = setInterval(updateTimer, 1000);
   }
   
@@ -289,12 +254,7 @@ setInterval(showNextItem, 5000);
     isTimerActive = false;
     isTimerPaused = false;
     
-    if (sessionType === 'focus') {
-      minutes = focusLength;
-    } else {
-      minutes = breakLength;
-    }
-    
+    minutes = sessionType === 'focus' ? parseInt(focusSlider.value) : parseInt(breakSlider.value);
     seconds = 0;
     timerToggle.innerHTML = '<i class="lucide-play"></i> Iniciar';
     updateTimerDisplay();
@@ -310,11 +270,11 @@ setInterval(showNextItem, 5000);
         // Alterna o tipo de sessão
         if (sessionType === 'focus') {
           sessionType = 'break';
-          minutes = breakLength;
+          minutes = parseInt(breakSlider.value);
           timerDescription.textContent = 'Faça uma pausa para descansar.';
         } else {
           sessionType = 'focus';
-          minutes = focusLength;
+          minutes = parseInt(focusSlider.value);
           timerDescription.textContent = 'Concentre-se na sua tarefa até o timer acabar.';
         }
         
@@ -322,33 +282,41 @@ setInterval(showNextItem, 5000);
         isTimerActive = false;
         timerToggle.innerHTML = '<i class="lucide-play"></i> Iniciar';
         updateTimerDisplay();
-      } else {
-        minutes--;
-        seconds = 59;
-        updateTimerDisplay();
+        return;
       }
+      minutes--;
+      seconds = 59;
     } else {
       seconds--;
-      updateTimerDisplay();
     }
+    updateTimerDisplay();
   }
   
   function updateTimerDisplay() {
-    timerDisplay.textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+    const displayMinutes = String(minutes).padStart(2, '0');
+    const displaySeconds = String(seconds).padStart(2, '0');
+    timerDisplay.textContent = `${displayMinutes}:${displaySeconds}`;
   }
   
   function playAlarmSound() {
-    const audio = new Audio('https://soundbible.com/mp3/service-bell_daniel_simion.mp3');
+    const audio = new Audio('https://assets.mixkit.co/sfx/preview/mixkit-alarm-digital-clock-beep-989.mp3');
     audio.play().catch(e => console.log('Falha ao reproduzir áudio:', e));
   }
-});
 
+  // ========== PLAYER DE SONS ==========
+  // ... (mantenha o código existente do player de sons) ...
+});
 document.addEventListener('DOMContentLoaded', function() {
-  // Sound data
+  // Inicializa os ícones Lucide
+  if (typeof lucide !== 'undefined') {
+    lucide.createIcons();
+  }
+
+  // Dados dos sons
   const sounds = {
     rain: {
       name: 'Chuva',
-      url: "https://www.zapsplat.com/wp-content/uploads/2015/sound-effects-112294/zapsplat_nature_rain_medium_light_house_roof_ext_112299.mp3"
+      url: 'https://www.zapsplat.com/wp-content/uploads/2015/sound-effects-112294/zapsplat_nature_rain_medium_light_house_roof_ext_112299.mp3'
     },
     forest: {
       name: 'Floresta',
@@ -380,12 +348,16 @@ document.addEventListener('DOMContentLoaded', function() {
   // Estado do player
   let currentAudio = null;
   let isPlaying = false;
-  let currentVolume = 0.5;
-  let currentSound = 'rain';
+  let currentVolume = volumeSlider.value / 100;
+  let currentSoundKey = 'rain';
 
-  // Inicializa o áudio
+  // Inicializa o player
+  initAudio(currentSoundKey);
+  updateVolumeIcon();
+
+  // Função para carregar um áudio
   function initAudio(soundKey) {
-    // Pausa e descarta o áudio atual, se existir
+    // Pausa e limpa o áudio atual
     if (currentAudio) {
       currentAudio.pause();
       currentAudio = null;
@@ -395,199 +367,150 @@ document.addEventListener('DOMContentLoaded', function() {
     currentAudio = new Audio(sounds[soundKey].url);
     currentAudio.volume = currentVolume;
     currentAudio.loop = true;
-    currentSound = soundKey;
+    currentSoundKey = soundKey;
     currentSoundDisplay.textContent = sounds[soundKey].name;
 
-    // Configura eventos do áudio
-    currentAudio.addEventListener('play', () => {
-      isPlaying = true;
-      updatePlayIcon();
-    });
-
-    currentAudio.addEventListener('pause', () => {
-      isPlaying = false;
-      updatePlayIcon();
+    // Atualiza botões ativos
+    soundButtons.forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.sound === soundKey);
+      btn.setAttribute('aria-pressed', btn.dataset.sound === soundKey);
     });
 
     // Se estava tocando, continua a reprodução
     if (isPlaying) {
-      currentAudio.play().catch(e => {
-        console.error("Erro ao reproduzir áudio:", e);
-        isPlaying = false;
+      playAudio();
+    }
+  }
+
+  // Função para reproduzir o áudio
+  function playAudio() {
+    currentAudio.play()
+      .then(() => {
+        isPlaying = true;
         updatePlayIcon();
-      });
-    }
-  }
-
-  // Atualiza ícone de play/pause
-  function updatePlayIcon() {
-    if (isPlaying) {
-      soundToggleIcon.classList.remove('lucide-play');
-      soundToggleIcon.classList.add('lucide-pause');
-    } else {
-      soundToggleIcon.classList.remove('lucide-pause');
-      soundToggleIcon.classList.add('lucide-play');
-    }
-  }
-
-  // Alterna entre play/pause
-  function togglePlayPause() {
-    if (!currentAudio) {
-      initAudio(currentSound);
-    }
-
-    if (isPlaying) {
-      currentAudio.pause();
-    } else {
-      currentAudio.play().catch(e => {
-        console.error("Erro ao reproduzir áudio:", e);
-        // Mostra alerta apenas se for uma restrição de autoplay
-        if (e.name === 'NotAllowedError') {
-          alert('Por favor, clique no botão "Play" para iniciar o som.');
+      })
+      .catch(error => {
+        console.error("Erro ao reproduzir áudio:", error);
+        // Mostra alerta se for erro de autoplay
+        if (error.name === 'NotAllowedError') {
+          alert('Por favor, clique no botão Play para iniciar os sons.');
         }
       });
-    }
   }
 
-  // Alterna mudo
-  function toggleMute() {
-    if (!currentAudio) return;
-
-    if (currentAudio.volume > 0) {
-      currentAudio.volume = 0;
-      volumeIcon.classList.remove('lucide-volume-2', 'lucide-volume-1');
-      volumeIcon.classList.add('lucide-volume-x');
-    } else {
-      currentAudio.volume = currentVolume;
-      updateVolumeIcon();
-    }
+  // Função para pausar o áudio
+  function pauseAudio() {
+    currentAudio.pause();
+    isPlaying = false;
+    updatePlayIcon();
   }
 
-  // Atualiza volume
-  function updateVolume() {
-    currentVolume = volumeSlider.value / 100;
-    if (currentAudio) {
-      currentAudio.volume = currentVolume;
+  // Atualiza ícone play/pause
+  function updatePlayIcon() {
+    if (soundToggleIcon) {
+      if (isPlaying) {
+        soundToggleIcon.classList.replace('lucide-play', 'lucide-pause');
+      } else {
+        soundToggleIcon.classList.replace('lucide-pause', 'lucide-play');
+      }
     }
-    updateVolumeIcon();
   }
 
   // Atualiza ícone de volume
   function updateVolumeIcon() {
+    if (!volumeIcon) return;
+    
     if (currentVolume === 0) {
-      volumeIcon.classList.remove('lucide-volume-1', 'lucide-volume-2');
-      volumeIcon.classList.add('lucide-volume-x');
+      volumeIcon.classList.replace('lucide-volume-2', 'lucide-volume-x');
+      volumeIcon.classList.replace('lucide-volume-1', 'lucide-volume-x');
     } else if (currentVolume < 0.5) {
-      volumeIcon.classList.remove('lucide-volume-x', 'lucide-volume-2');
-      volumeIcon.classList.add('lucide-volume-1');
+      volumeIcon.classList.replace('lucide-volume-x', 'lucide-volume-1');
+      volumeIcon.classList.replace('lucide-volume-2', 'lucide-volume-1');
     } else {
-      volumeIcon.classList.remove('lucide-volume-x', 'lucide-volume-1');
-      volumeIcon.classList.add('lucide-volume-2');
+      volumeIcon.classList.replace('lucide-volume-x', 'lucide-volume-2');
+      volumeIcon.classList.replace('lucide-volume-1', 'lucide-volume-2');
     }
   }
 
-  // Define o botão ativo
-  function setActiveButton(soundKey) {
-    soundButtons.forEach(button => {
-      const buttonSound = button.getAttribute('data-sound');
-      const isActive = buttonSound === soundKey;
-      button.classList.toggle('active', isActive);
-      button.setAttribute('aria-pressed', isActive.toString());
-    });
-  }
-
   // Event Listeners
+
+  // Botões de seleção de som
   soundButtons.forEach(button => {
     button.addEventListener('click', function() {
-      const soundKey = this.getAttribute('data-sound');
+      const soundKey = this.dataset.sound;
       initAudio(soundKey);
-      setActiveButton(soundKey);
     });
   });
 
-  soundToggle.addEventListener('click', togglePlayPause);
-  soundMute.addEventListener('click', toggleMute);
-  volumeSlider.addEventListener('input', updateVolume);
-
-  // Inicialização
-  initAudio(currentSound);
-  setActiveButton(currentSound);
-  updateVolumeIcon();
-  updatePlayIcon();
-});
- // Script para o accordion
-    document.addEventListener('DOMContentLoaded', function() {
-      const accordionItems = document.querySelectorAll('.accordion-item');
-      
-      accordionItems.forEach(item => {
-        const header = item.querySelector('.accordion-header');
-        
-        header.addEventListener('click', () => {
-          // Fecha todos os outros itens
-          accordionItems.forEach(otherItem => {
-            if (otherItem !== item) {
-              otherItem.classList.remove('active');
-            }
-          });
-          
-          // Alterna o item clicado
-          item.classList.toggle('active');
-        });
-      });
-      
-      // Abre o primeiro item por padrão
-      if (accordionItems.length > 0) {
-        accordionItems[0].classList.add('active');
+  // Botão play/pause
+  if (soundToggle) {
+    soundToggle.addEventListener('click', function() {
+      if (isPlaying) {
+        pauseAudio();
+      } else {
+        playAudio();
       }
-      
-      // Define a data de atualização
-      const currentDate = new Date();
-      const formattedDate = currentDate.toLocaleDateString('pt-BR', {
-        day: '2-digit',
-        month: '2-digit',
-        year: 'numeric'
-      });
-      document.getElementById('privacy-date').textContent = formattedDate;
     });
-    document.addEventListener('DOMContentLoaded', function() {
+  }
+
+  // Botão mudo
+  if (soundMute) {
+    soundMute.addEventListener('click', function() {
+      if (currentAudio.volume > 0) {
+        currentAudio.volume = 0;
+        volumeSlider.value = 0;
+        currentVolume = 0;
+      } else {
+        currentAudio.volume = currentVolume || 0.5;
+        volumeSlider.value = (currentVolume || 0.5) * 100;
+      }
+      updateVolumeIcon();
+    });
+  }
+
+  // Controle de volume
+  if (volumeSlider) {
+    volumeSlider.addEventListener('input', function() {
+      currentVolume = this.value / 100;
+      if (currentAudio) {
+        currentAudio.volume = currentVolume;
+      }
+      updateVolumeIcon();
+    });
+  }
+});
+// ========== ACCORDION ==========
+document.addEventListener('DOMContentLoaded', function() {
+  const accordionItems = document.querySelectorAll('.accordion-item');
+  
+  accordionItems.forEach(item => {
+    const header = item.querySelector('.accordion-header');
+    
+    header.addEventListener('click', () => {
+      item.classList.toggle('active');
+    });
+  });
+  
+  // Define data de atualização
+  const currentDate = new Date();
+  document.getElementById('privacy-date').textContent = currentDate.toLocaleDateString('pt-BR');
+});
+
+// ========== MENU MOBILE ==========
+document.addEventListener('DOMContentLoaded', function() {
   const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
   const mobileNav = document.getElementById('mobile-nav');
   const menuIcon = document.getElementById('menu-icon');
   
-  // Alternar menu mobile
   mobileMenuToggle.addEventListener('click', function() {
     mobileNav.classList.toggle('active');
     
-    // Animação do ícone
     if (mobileNav.classList.contains('active')) {
-      menuIcon.classList.remove('lucide-menu');
-      menuIcon.classList.add('lucide-x');
-      document.body.style.overflow = 'hidden'; // Trava o scroll
+      menuIcon.classList.replace('lucide-menu', 'lucide-x');
+      document.body.style.overflow = 'hidden';
     } else {
-      menuIcon.classList.remove('lucide-x');
-      menuIcon.classList.add('lucide-menu');
-      document.body.style.overflow = ''; // Libera o scroll
-    }
-  });
-  
-  // Fechar menu ao clicar em um link (mobile)
-  const mobileLinks = document.querySelectorAll('.mobile-nav .nav-link');
-  mobileLinks.forEach(link => {
-    link.addEventListener('click', function() {
-      mobileNav.classList.remove('active');
-      menuIcon.classList.remove('lucide-x');
-      menuIcon.classList.add('lucide-menu');
-      document.body.style.overflow = ''; // Libera o scroll
-    });
-  });
-  
-  // Fechar menu ao redimensionar para desktop
-  window.addEventListener('resize', function() {
-    if (window.innerWidth >= 992) {
-      mobileNav.classList.remove('active');
-      menuIcon.classList.remove('lucide-x');
-      menuIcon.classList.add('lucide-menu');
-      document.body.style.overflow = ''; // Libera o scroll
+      menuIcon.classList.replace('lucide-x', 'lucide-menu');
+      document.body.style.overflow = '';
     }
   });
 });

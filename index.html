@@ -9,6 +9,7 @@
   <!-- CSS (opcional, apenas se precisar de estilos específicos) -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lucide@latest/dist/umd/lucide.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lucide@latest/dist/umd/lucide.css">
+<script src="js/script.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/lucide@latest"></script>
 <script>
   // Inicializar ícones Lucide
@@ -204,13 +205,13 @@
               <div class="sound-controls">
                 <div class="sound-main-controls">
                   <button id="sound-toggle" class="btn btn-icon btn-outline" aria-label="Reproduzir som">
-                    <i class="lucide-play" id="sound-toggle-icon"></i>
+                    <i class="lucide-play" id="sound-toggle-icon">▶</i>
                   </button>
                   <div id="current-sound" class="current-sound">Chuva</div>
                 </div>
                 <div class="sound-volume-controls">
                   <button id="sound-mute" class="btn btn-icon btn-ghost" aria-label="Silenciar">
-                    <i class="lucide-volume-2" id="volume-icon"></i>
+                    <i class="lucide-volume-2" id="volume-icon">🔇</i>
                   </button>
                   <div class="volume-slider-container">
                     <input 
@@ -486,7 +487,7 @@
     lucide.createIcons();
   });
 </script>
-  <script src="js/script.js"></script>
+
 
 </body>
 </html>
